@@ -1,0 +1,47 @@
+variables:
+    siteName: "gitlabtest"
+    imagesName: "lchpersonal/tomcat8-jdk8:v1"
+    containerName: "gitlabtest_container"
+    siteLocation: "/home/site"
+    containerSiteLocation: "/usr/local/tomcat/webapps/ROOT"
+    host_port: "8081"
+    container_port: "8080"
+
+before_script:
+        # 关闭docker容器，删除容器
+        - if [ "$(docker ps | grep $containerName)" ]; then
+        - docker stop $containerName
+        - docker rm -f $containerName
+        - fi
+        # 清理项目目录
+        - if [ -d "$siteLocation/$siteName" ]; then
+        - sudo rm -rf $siteLocation/$siteName
+        - fi
+        - sudo mkdir -p $siteLocation/$siteName
+
+devBuild:
+    stage: build
+    script:
+        - mvn clean package -Ponline -DskipTests -U
+        - pwd
+    only:
+        - master
+    tags:
+        - dev_runner
+
+devDeploy:
+    stage: deploy
+    script:
+        - pwd
+        - sudo cp target/$siteName.war $siteLocation/
+        - unzip -qo $siteLocation/$siteName.war -d $siteLocation/$siteName/
+        - docker run -d -p $host_port:$container_port --name $containerName -v $siteLocation/$siteName:$containerSiteLocation $imagesName catalina.sh run
+       # - sudo rm $siteLocation/$siteName.war
+    only:
+        - master
+    tags:
+        - dev_runner
+    cache:
+         key: "CI_BUILD_STAGE"
+         paths:
+             - target/

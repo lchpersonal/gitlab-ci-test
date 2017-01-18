@@ -1,0 +1,62 @@
+[
+  {
+    "name": "系统管理",
+    "menu": [
+      {
+        "link": "/role/list",
+        "name": "角色管理"
+      },
+      {
+        "link": "/user/list",
+        "name": "用户管理"
+      },
+      {
+        "link": "/department/list?limit=-1",
+        "name": "组织架构"
+      }
+    ]
+  },
+  {
+    "name": "基础信息",
+    "menu": [
+      {
+        "link": "/dict/list",
+        "name": "数据字典管理"
+      },
+      {
+        "link": "/log/list",
+        "name": "日志管理"
+      },
+      {
+        "link": "/notice/list",
+        "name": "公告栏"
+      }
+    ]
+  },
+  {
+    "name": "供应商信息",
+    "menu": [
+      {
+        "link": "/jst/supplier/supplier/list",
+        "name": "供应商信息"
+      }
+    ]
+  },
+  {
+    "name": "商品管理",
+    "menu": [
+      {
+        "link": "/jst/product/new/list",
+        "name": "新增商品信息"
+      },
+      {
+        "link": "/jst/product/info/list",
+        "name": "商品信息列表"
+      },
+      {
+        "link": "/jst/product/img/list",
+        "name": "商品图片管理"
+      }
+    ]
+  }
+]
